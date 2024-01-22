@@ -3,7 +3,9 @@ const express = require("express")
 const app = express()
 const port = 3000
 const plantsRouter = require("./routes/plants")
+const cors = require("cors")
 
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 

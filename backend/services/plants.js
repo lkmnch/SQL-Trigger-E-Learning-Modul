@@ -13,31 +13,11 @@ async function getMultiple(page = 1) {
 	return { data, meta }
 }
 
-/* async function create(plant) {
-	const result = await db.query(`INSERT INTO plants (plant_id,
-        plant_name,
-        plant_description,
-        price,
-        stock_quantity) VALUES ('${plant.id}','${plant.name}', '${plant.description}', '${plant.price}', '${plant.stock}')`)
+async function create(query) {
+	console.log(query)
+	//const result = await db.query(`${query.query}`)
 
-	let message = "Error in creating plant"
-
-	if (result.affectedRows) {
-		message = "Plant created successfully"
-	}
-
-	return { message }
-} */
-async function create(plant) {
-	const result = await db.query(`${plant.query}`)
-
-	let message = "Error in Query"
-
-	if (result.affectedRows) {
-		message = "Query was successfully"
-	}
-
-	return { message }
+	return await db.query(`${query.query}`)
 }
 
 module.exports = { getMultiple, create }

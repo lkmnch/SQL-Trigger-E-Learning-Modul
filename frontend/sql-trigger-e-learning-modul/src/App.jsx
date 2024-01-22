@@ -1,7 +1,7 @@
 import { useState } from "react"
 import axios from "axios"
 
-const baseURL = " http://localhost:3000/plants"
+const baseURL = "http://localhost:3000/plants"
 
 function App() {
 	const [query, setQuery] = useState("")
@@ -13,13 +13,25 @@ function App() {
 	}
 
 	const handleExecuteQuery = () => {
-		//TODO
-		// fetch post: localhost:3000/plants -data(query)
-		axios.get(baseURL).then((response) => {
-			console.log(response.data.data)
-			setTableHeaders(Object.keys(response.data.data[0]))
-
-			setData(Object.values(response.data.data))
+		axios({
+			method: "post",
+			url: baseURL,
+			data: {
+				query: query,
+			},
+			headers: {
+				Accept: "application/json",
+				"Content-type": "application/json",
+			},
+		}).then((response) => {
+			console.log(response.data)
+			if (Array.isArray(response.data)) {
+				setTableHeaders(Object.keys(response.data[0]))
+				setData(Object.values(response.data))
+			} else {
+				setTableHeaders([])
+				setData([])
+			}
 		})
 
 		// fetch get:
@@ -40,32 +52,33 @@ function App() {
 				<button className='bg-lime-500' onClick={handleExecuteQuery}>
 					Run
 				</button>
-				<div id='query-result'>
-					<h3>Query Result:</h3>
-					<table>
-						<thead>
-							<tr>
-								{tableHeaders.map((header, index) => (
-									<th key={index}>{header}</th>
-								))}
-							</tr>
-						</thead>
-						<tbody>
-							{data.map((row, index) => {
-								return (
-									<tr key={index}>
-										<td>{row.plant_id}</td>
-										<td>{row.plant_name}</td>
-										<td>{row.plant_description}</td>
-										<td>{row.plant_price}</td>
-										<td>{row.price}</td>
-										<td>{row.stock_quantity}</td>
-									</tr>
-								)
-							})}
-						</tbody>
-					</table>
-				</div>
+
+				{data ? (
+					<div id='select-output'>
+						<table>
+							<thead>
+								<tr>
+									{tableHeaders.map((header, index) => (
+										<th key={index}>{header}</th>
+									))}
+								</tr>
+							</thead>
+							<tbody>
+								{data.map((row, index) => {
+									return (
+										<tr key={index}>
+											{Object.values(row).map((rowValue, index) => {
+												return <td key={index}>{rowValue}</td>
+											})}
+										</tr>
+									)
+								})}
+							</tbody>
+						</table>
+					</div>
+				) : (
+					<div></div>
+				)}
 			</main>
 		</>
 	)
