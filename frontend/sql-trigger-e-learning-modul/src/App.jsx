@@ -12,14 +12,30 @@ function App() {
 	const [query, setQuery] = useState("")
 	const [tableHeaders, setTableHeaders] = useState([])
 	const [data, setData] = useState([])
+	const [tableNames, setTableNames] = useState([])
 
 	const handleQueryChange = (event) => {
 		setQuery(event.target.value)
 	}
 
+	const getTableNames = async () => {
+		const response = await axios.get("http://localhost:3000/tables")
+		const responseData = response.data
+		const names = responseData.map((obj) => obj.Tables_in_plant_shop)
+		setTableNames(names)
+	}
+
 	useEffect(() => {
-		//TODO Create API-Endpoint in Backend for a GET-Request. The API Responds with all Tables in the Database (Show Tables)
-	})
+		const fetchData = async () => {
+			try {
+				await getTableNames()
+			} catch (error) {
+				console.error("Error fetching table names:", error)
+			}
+		}
+
+		fetchData()
+	}, [])
 
 	const handleExecuteQuery = () => {
 		axios({
@@ -46,24 +62,26 @@ function App() {
 	return (
 		<div className='bg-slate-50 dark:bg-slate-600 min-h-screen'>
 			<header className='container mx-auto'>
-				<h1 className='mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white'>
+				{/* <h1 className='mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white'>
 					SQL-Trigger, E-Learning-Modul
-				</h1>
+				</h1> */}
 				<DarkThemeToggle />
 			</header>
-			<div className='flex container mx-auto'>
+			<div className='flex container mx-auto gap-4'>
 				<div className='container w-1/3'>
 					<Sidebar aria-label='Sidebar with multi-level dropdown example'>
 						<Sidebar.Items>
 							<Sidebar.ItemGroup>
 								<Sidebar.Collapse icon={HiDatabase} label='Database'>
-									<Sidebar.Item href='#'>Products</Sidebar.Item>
+									{tableNames.map((name, index) => (
+										<Sidebar.Item key={index}>{name}</Sidebar.Item>
+									))}
 								</Sidebar.Collapse>
 							</Sidebar.ItemGroup>
 						</Sidebar.Items>
 					</Sidebar>
 				</div>
-				<div className='container mx-auto flex-row gap-7'>
+				<div className='container mx-auto flex-row'>
 					<main>
 						<textarea
 							className='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
@@ -74,7 +92,7 @@ function App() {
 							cols={100}
 						/>
 						<button
-							className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+							className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-4'
 							onClick={handleExecuteQuery}>
 							Run
 						</button>

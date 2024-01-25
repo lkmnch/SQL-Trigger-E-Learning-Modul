@@ -9,7 +9,7 @@
 			"server": "localhost",
 			"port": 3306,
 			"driver": "MySQL",
-			"name": "FirstMySQLConnection",
+			"name": "Connection2plantShopDB",
 			"database": "plant_shop",
 			"username": "root"
 		}

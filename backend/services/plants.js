@@ -2,7 +2,7 @@ const db = require("./db")
 const helper = require("../helper")
 const config = require("../config")
 
-async function getMultiple(page = 1) {
+/* async function getMultiple(page = 1) {
 	const offset = helper.getOffset(page, config.listPerPage)
 	const rows = await db.query(
 		`SELECT * FROM plants LIMIT ${offset},${config.listPerPage}`
@@ -11,7 +11,7 @@ async function getMultiple(page = 1) {
 	const meta = { page }
 
 	return { data, meta }
-}
+} */
 
 async function create(query) {
 	console.log(query)
@@ -20,4 +20,4 @@ async function create(query) {
 	return await db.query(`${query.query}`)
 }
 
-module.exports = { getMultiple, create }
+module.exports = create
