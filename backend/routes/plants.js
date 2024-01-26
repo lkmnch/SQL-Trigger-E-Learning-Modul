@@ -22,7 +22,7 @@ router.post("/", async function (req, res, next) {
 			"GET, POST, PUT, DELETE, OPTIONS"
 		)
 		res.setHeader("Access-Control-Expose-Headers", "*")
-		res.json(await plants.create(req.body))
+		res.json(await plants.execute(req.body))
 	} catch (err) {
 		console.error(`Error while creating plant`, err.message)
 		next(err)

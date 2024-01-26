@@ -13,11 +13,11 @@ const config = require("../config")
 	return { data, meta }
 } */
 
-async function create(query) {
+async function execute(query) {
 	console.log(query)
 	//const result = await db.query(`${query.query}`)
 
 	return await db.query(`${query.query}`)
 }
 
-module.exports = create
+module.exports = { execute }

@@ -7,4 +7,10 @@ async function getTables() {
 	return data
 }
 
-module.exports = { getTables }
+async function getTable(table) {
+	const rows = await db.query(`SELECT * FROM ${table}`)
+	const data = helper.emptyOrRows(rows)
+	return data
+}
+
+module.exports = { getTables, getTable }

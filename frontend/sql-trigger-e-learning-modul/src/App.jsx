@@ -59,6 +59,20 @@ function App() {
 			}
 		})
 	}
+
+	const handleTableClick = async (name) => {
+		const response = await axios.get(`http://localhost:3000/tables/${name}`)
+		console.log(response)
+		console.log(response.data)
+		if (response.data.length !== 0) {
+			console.log(response.data.length)
+			setTableHeaders(Object.keys(response.data[0]))
+			setData(Object.values(response.data))
+		} else {
+			setTableHeaders([])
+			setData([])
+		}
+	}
 	return (
 		<div className='bg-slate-50 dark:bg-slate-600 min-h-screen'>
 			<header className='container mx-auto'>
@@ -74,7 +88,11 @@ function App() {
 							<Sidebar.ItemGroup>
 								<Sidebar.Collapse icon={HiDatabase} label='Database'>
 									{tableNames.map((name, index) => (
-										<Sidebar.Item key={index}>{name}</Sidebar.Item>
+										<Sidebar.Item
+											onClick={() => handleTableClick(name)}
+											key={index}>
+											{name}
+										</Sidebar.Item>
 									))}
 								</Sidebar.Collapse>
 							</Sidebar.ItemGroup>
@@ -97,7 +115,7 @@ function App() {
 							Run
 						</button>
 
-						{data ? (
+						{data.length ? (
 							<div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
 								<table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
 									<thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -129,7 +147,7 @@ function App() {
 								</table>
 							</div>
 						) : (
-							<div></div>
+							<div>No Output</div>
 						)}
 					</main>
 				</div>
