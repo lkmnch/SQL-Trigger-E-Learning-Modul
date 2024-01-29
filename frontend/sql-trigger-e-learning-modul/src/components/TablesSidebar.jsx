@@ -23,7 +23,8 @@ const TablesSidebar = () => {
 	const getTableNames = async () => {
 		const response = await axios.get("http://localhost:3000/tables")
 		const responseData = response.data
-		const names = responseData.map((obj) => obj.Tables_in_plant_shop)
+		console.log(responseData)
+		const names = responseData.map((obj) => obj.Tables_in_sakila)
 		setTableNames(names)
 	}
 

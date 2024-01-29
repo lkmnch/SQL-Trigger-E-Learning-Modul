@@ -3,7 +3,7 @@ const config = {
 		host: "localhost",
 		user: "root",
 		password: "root",
-		database: "plant_shop",
+		database: "sakila",
 		connectTimeout: 60000,
 	},
 	listPerPage: 10,

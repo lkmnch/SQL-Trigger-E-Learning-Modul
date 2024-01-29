@@ -19,16 +19,26 @@ const QueryOutput = () => {
 						</thead>
 						<tbody>
 							{data.map((row, index) => {
+								console.log(row)
 								return (
 									<tr
 										className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'
 										key={index}>
 										{Object.values(row).map((rowValue, index) => {
-											return (
-												<td className='px-6 py-4' key={index}>
-													{rowValue}
-												</td>
-											)
+											if (typeof rowValue === "object" && rowValue !== null) {
+												console.log(rowValue)
+												return (
+													<td className='px-6 py-4' key={index}>
+														{Object.entries(rowValue)}
+													</td>
+												)
+											} else {
+												return (
+													<td className='px-6 py-4' key={index}>
+														{rowValue}
+													</td>
+												)
+											}
 										})}
 									</tr>
 								)
