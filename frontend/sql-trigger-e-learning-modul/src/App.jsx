@@ -1,58 +1,37 @@
 import TablesSidebar from "./components/TablesSidebar"
-import { DarkThemeToggle } from "flowbite-react"
-import { Tabs } from "flowbite-react"
-import { Card } from "flowbite-react"
+import { DarkThemeToggle, Tabs, Footer } from "flowbite-react"
+
 import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi"
-import QueryInput from "./components/QueryInput"
-import QueryOutput from "./components/QueryOutput"
+
+import { Outlet } from "react-router-dom"
 
 const App = () => {
 	return (
-		<div className='bg-slate-50 dark:bg-slate-600 min-h-screen'>
-			<header className='container mx-auto'>
+		<div>
+			<header className='flex justify-between fixed z-30 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
+				<div className='px-3 py-3 lg:px-5 lg:pl-3'>
+					<div
+						id='logo'
+						className='text-4xl font-black text-gray-900 dark:text-white'>
+						SQL-Trigger verstehen!
+					</div>
+				</div>
 				<DarkThemeToggle />
 			</header>
-			<Tabs aria-label='Full width tabs' style='fullWidth'>
-				<Tabs.Item active title='SQL-Editor' icon={HiUserCircle}>
-					<div className='flex container mx-auto gap-4'>
-						<TablesSidebar />
-						<div className='container mx-auto flex-row'>
-							<QueryInput />
-							<QueryOutput />
-						</div>
+			<div className='bg-slate-50 dark:bg-slate-600 min-h-screen pt-16'>
+				<div className='w-full flex flex-col sm:flex-row flex-grow overflow-hidden'>
+					<TablesSidebar />
+					<div
+						id='main-content'
+						className='relative w-full h-screen overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900'>
+						<main>
+							<div className='flex justify-center px-4 pt-6'>
+								<Outlet />
+							</div>
+						</main>
 					</div>
-				</Tabs.Item>
-				<Tabs.Item title='Verleihsystem' icon={HiUserCircle}>
-					<div className='container mx-auto flex justify-between'>
-						<Card href='#' className='max-w-sm'>
-							<h5 className='text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
-								Neuen Kunden anlegen
-							</h5>
-							<p className='font-normal text-gray-700 dark:text-gray-400'>
-								Hier neuen Kunden anlegen, damit diesem DVDs verliehen werden
-								können.
-							</p>
-						</Card>
-						<Card href='#' className='max-w-sm'>
-							<h5 className='text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
-								DVD an Kunden verleihen
-							</h5>
-							<p className='font-normal text-gray-700 dark:text-gray-400'>
-								Hier kann eine DVD, falls diese vorhanden ist einem Kunden
-								verliehen werden.
-							</p>
-						</Card>
-						<Card href='#' className='max-w-sm'>
-							<h5 className='text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
-								DVD Rückgabe
-							</h5>
-							<p className='font-normal text-gray-700 dark:text-gray-400'>
-								Hier kann eine DVD, zur Rückgabe angenommen werden.
-							</p>
-						</Card>
-					</div>
-				</Tabs.Item>
-			</Tabs>
+				</div>
+			</div>
 		</div>
 	)
 }

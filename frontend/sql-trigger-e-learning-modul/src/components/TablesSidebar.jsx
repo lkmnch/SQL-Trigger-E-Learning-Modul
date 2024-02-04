@@ -3,6 +3,7 @@ import { HiDatabase } from "react-icons/hi"
 import TablesContext from "../context/TablesProvider"
 import { Sidebar } from "flowbite-react"
 import axios from "axios"
+import { Link } from "react-router-dom"
 
 const TablesSidebar = () => {
 	const { setData, setTableHeaders, tableNames, setTableNames } =
@@ -42,23 +43,40 @@ const TablesSidebar = () => {
 		}
 	}
 	return (
-		<div className='container w-1/3'>
-			<Sidebar aria-label='Sidebar with multi-level dropdown example'>
-				<Sidebar.Items>
-					<Sidebar.ItemGroup>
-						<Sidebar.Collapse icon={HiDatabase} label='Database'>
-							{tableNames.map((name, index) => (
-								<Sidebar.Item
-									onClick={() => handleTableClick(name)}
-									key={index}>
-									{name}
-								</Sidebar.Item>
-							))}
-						</Sidebar.Collapse>
-					</Sidebar.ItemGroup>
-				</Sidebar.Items>
-			</Sidebar>
-		</div>
+		<Sidebar
+			className='h-full fixed top-0 left-0 z-20'
+			aria-label='Sidebar for DB-Tables'>
+			<Sidebar.Items className='pt-14'>
+				<Sidebar.ItemGroup>
+					<Link to={"/editor"}>
+						<div className=' flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'>
+							<span className='px-3 flex-1 whitespace-nowrap'>SQL-Editor</span>
+						</div>
+					</Link>
+					<Sidebar.Collapse icon={HiDatabase} label='Database'>
+						{tableNames.map((name, index) => (
+							<Sidebar.Item onClick={() => handleTableClick(name)} key={index}>
+								{name}
+							</Sidebar.Item>
+						))}
+					</Sidebar.Collapse>
+				</Sidebar.ItemGroup>
+				<Sidebar.ItemGroup id='rental'>
+					<Sidebar.Item>Kunde anlegen</Sidebar.Item>
+					<Sidebar.Item>DVD an Kunden verleihen</Sidebar.Item>
+					<Sidebar.Item>DVD Rückgabe</Sidebar.Item>
+				</Sidebar.ItemGroup>
+				<Sidebar.ItemGroup id='other'>
+					<Link to={"/"}>
+						<div className=' flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'>
+							<span className='px-3 flex-1 whitespace-nowrap'>
+								Willkommensseite
+							</span>
+						</div>
+					</Link>
+				</Sidebar.ItemGroup>
+			</Sidebar.Items>
+		</Sidebar>
 	)
 }
 
