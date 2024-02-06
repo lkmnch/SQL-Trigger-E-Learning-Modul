@@ -2,6 +2,7 @@
 const express = require("express")
 const app = express()
 const port = 3000
+const customersRouter = require("./routes/customers")
 const plantsRouter = require("./routes/plants")
 const tableNamesRouter = require("./routes/tables")
 const cors = require("cors")
@@ -15,8 +16,8 @@ app.get("/", (req, res) => {
 	// das hier ist die root-URL der Server-Applikation
 	res.json({ message: "ok" })
 })
-
-app.use("/plants", plantsRouter)
+app.use("/customers", customersRouter)
+app.use("/plants", plantsRouter) //Name aendern
 
 app.use("/tables", tableNamesRouter)
 //Error handler middleware

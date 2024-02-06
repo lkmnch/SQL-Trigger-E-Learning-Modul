@@ -62,7 +62,20 @@ const TablesSidebar = () => {
 					</Sidebar.Collapse>
 				</Sidebar.ItemGroup>
 				<Sidebar.ItemGroup id='rental'>
-					<Sidebar.Item>Kunde anlegen</Sidebar.Item>
+					<Link to={"/rental"}>
+						<div className=' flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'>
+							<span className='px-3 flex-1 whitespace-nowrap'>
+								Verleihsystem - Dashboard
+							</span>
+						</div>
+					</Link>
+					<Link to={"rental/customer/create"}>
+						<div className=' flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'>
+							<span className='px-3 flex-1 whitespace-nowrap'>
+								Kunde anlegen
+							</span>
+						</div>
+					</Link>
 					<Sidebar.Item>DVD an Kunden verleihen</Sidebar.Item>
 					<Sidebar.Item>DVD Rückgabe</Sidebar.Item>
 				</Sidebar.ItemGroup>
@@ -71,6 +84,13 @@ const TablesSidebar = () => {
 						<div className=' flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'>
 							<span className='px-3 flex-1 whitespace-nowrap'>
 								Willkommensseite
+							</span>
+						</div>
+					</Link>
+					<Link to={"/syntax"}>
+						<div className=' flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'>
+							<span className='px-3 flex-1 whitespace-nowrap'>
+								MySQL-Trigger Syntax
 							</span>
 						</div>
 					</Link>

@@ -9,7 +9,8 @@ import ErrorPage from "./error-page"
 import RentalMain from "./components/RentalMain"
 import Editor from "./components/Editor.jsx"
 import Welcome from "./components/Welcome.jsx"
-
+import Syntax from "./components/Syntax.jsx"
+import NewCustomer from "./components/NewCustomer.jsx"
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -17,19 +18,22 @@ const router = createBrowserRouter([
 		errorElement: <ErrorPage />,
 		children: [
 			{ path: "/", element: <Welcome />, errorElement: <ErrorPage /> },
+			{ path: "/syntax", element: <Syntax />, errorElement: <ErrorPage /> },
 			{
 				path: "/editor",
 				element: <Editor />,
 				errorElement: <ErrorPage />,
 			},
-		],
-	},
-	{
-		path: "/rental",
-		element: <RentalMain />,
-		errorElement: <ErrorPage />,
-		children: [
-			{ path: "kundeAnlegen", element: <div>Kunde hier anlegen</div> },
+			{
+				path: "rental",
+				element: <RentalMain />,
+				errorElement: <ErrorPage />,
+			},
+			{ path: "rental/customer", element: <div>Kunde </div> },
+			{
+				path: "rental/customer/create",
+				element: <NewCustomer />,
+			},
 		],
 	},
 ])
