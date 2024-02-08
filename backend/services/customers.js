@@ -24,10 +24,10 @@ async function createCustomer(customer) {
         values ( ${customer.storeId}, "${customer.firstName}", "${customer.lastName}", "${customer.email}", ${addressId}, ${customer.active})`)
 		console.log(resultCustomer.affectedRows)
 		if (resultCustomer.affectedRows > 0) {
-			const message = "New Customer was created succesfully"
+			const message = "Neuer Kunde wurde erfolgreich angelegt."
 			return message
 		} else {
-			const ErrorMessage = "Error creating Customr"
+			const ErrorMessage = "Fehler beim Anlegen des Kunden, bitte versuchen."
 			return ErrorMessage
 		}
 	} catch (error) {

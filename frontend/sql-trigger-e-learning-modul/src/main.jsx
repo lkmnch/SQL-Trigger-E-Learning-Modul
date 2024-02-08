@@ -34,6 +34,7 @@ const router = createBrowserRouter([
 				path: "rental/customer/create",
 				element: <NewCustomer />,
 			},
+			{ path: "scenario1", element: }
 		],
 	},
 ])

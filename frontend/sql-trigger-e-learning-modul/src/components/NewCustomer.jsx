@@ -1,5 +1,7 @@
-import React, { useState } from "react"
-import { TextInput, Label, Button } from "flowbite-react"
+import React, { useState, useContext } from "react"
+import { Link } from "react-router-dom"
+import { TextInput, Label, Button, Modal } from "flowbite-react"
+import TablesContext from "../context/TablesProvider"
 import axios from "axios"
 
 function NewCustomer() {
@@ -12,7 +14,12 @@ function NewCustomer() {
 	const [city, setCity] = useState("")
 	const [address, setAddress] = useState("")
 
-	const handleSubmit = (e) => {
+	const { createCustomerResponse, setCreateCustomerResponse } =
+		useContext(TablesContext)
+
+	const [openModal, setOpenModal] = useState(false)
+
+	const handleSubmit = async (e) => {
 		e.preventDefault()
 		const newCustomer = {
 			storeId: "1",
@@ -26,8 +33,20 @@ function NewCustomer() {
 			city,
 			address,
 		}
-		axios.post("http://localhost:3000/customers", newCustomer)
-		console.log(newCustomer)
+		await axios
+			.post("http://localhost:3000/customers", newCustomer)
+			.then((response) => {
+				setCreateCustomerResponse(response)
+				setFirstName("")
+				setLastName("")
+				setEmail("")
+				setPhone("")
+				setCountry("")
+				setPostalCode("")
+				setCity("")
+				setAddress("")
+			})
+			.then(() => setOpenModal(true))
 	}
 
 	return (
@@ -51,6 +70,7 @@ function NewCustomer() {
 								<Label htmlFor='firstName' value='Vorname' />
 							</div>
 							<TextInput
+								required
 								id='firstName'
 								type='text'
 								sizing='sm'
@@ -63,6 +83,7 @@ function NewCustomer() {
 								<Label htmlFor='lastName' value='Nachname' />
 							</div>
 							<TextInput
+								required
 								id='lastName'
 								type='text'
 								sizing='sm'
@@ -102,6 +123,7 @@ function NewCustomer() {
 							<Label htmlFor='country' value='Land' />
 						</div>
 						<TextInput
+							required
 							id='country'
 							type='text'
 							sizing='sm'
@@ -114,6 +136,7 @@ function NewCustomer() {
 							<Label htmlFor='postalCode' value='Postleitzahl' />
 						</div>
 						<TextInput
+							required
 							id='postalCode'
 							type='text'
 							sizing='sm'
@@ -126,6 +149,7 @@ function NewCustomer() {
 							<Label htmlFor='city' value='Stadt' />
 						</div>
 						<TextInput
+							required
 							id='city'
 							type='text'
 							sizing='sm'
@@ -138,6 +162,7 @@ function NewCustomer() {
 							<Label htmlFor='address' value='Adresse' />
 						</div>
 						<TextInput
+							required
 							id='address'
 							type='text'
 							sizing='sm'
@@ -146,6 +171,29 @@ function NewCustomer() {
 						/>
 					</div>
 					<Button type='submit'>Anlegen</Button>
+					<Modal show={openModal} onClose={() => setOpenModal(false)}>
+						<Modal.Header>
+							<span>{"Tutorial - Schritt [1/4]"}</span>
+						</Modal.Header>
+						<Modal.Body>
+							<div className='space-y-6'>
+								<p className='text-3xl text-center  leading-relaxed text-gray-500 dark:text-gray-400'>
+									{createCustomerResponse.data}
+								</p>
+							</div>
+						</Modal.Body>
+						<Modal.Footer className='flex justify-center'>
+							<Button onClick={() => setOpenModal(false)}>
+								Weiteren Kunden anlegen
+							</Button>
+
+							<Link to={"/rental"}>
+								<Button color='gray' onClick={() => setOpenModal(false)}>
+									Zurück zum Dashboard
+								</Button>
+							</Link>
+						</Modal.Footer>
+					</Modal>
 				</div>
 			</form>
 		</div>
