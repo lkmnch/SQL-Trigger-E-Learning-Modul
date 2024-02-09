@@ -11,6 +11,7 @@ import Editor from "./components/Editor.jsx"
 import Welcome from "./components/Welcome.jsx"
 import Syntax from "./components/Syntax.jsx"
 import NewCustomer from "./components/NewCustomer.jsx"
+import CreateTrigger from "./components/CreateTrigger.jsx"
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
 				path: "rental/customer/create",
 				element: <NewCustomer />,
 			},
-			{ path: "scenario1", element: }
+			{ path: "scenario1", element: <CreateTrigger /> },
 		],
 	},
 ])

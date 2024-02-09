@@ -24,8 +24,8 @@ const App = () => {
 					<div
 						id='main-content'
 						className='relative w-full h-screen overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900'>
-						<main>
-							<div className='flex px-4 pt-6'>
+						<main className='h-screen'>
+							<div className='flex px-4 pt-6 h-1/2'>
 								<Outlet />
 							</div>
 						</main>

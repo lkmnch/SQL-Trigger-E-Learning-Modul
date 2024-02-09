@@ -8,6 +8,9 @@ export const TablesProvider = ({ children }) => {
 	const [tableHeaders, setTableHeaders] = useState([])
 
 	const [createCustomerResponse, setCreateCustomerResponse] = useState("")
+
+	const [triggerQuery, setTriggerQuery] = useState([])
+
 	return (
 		<TablesContext.Provider
 			value={{
@@ -19,6 +22,8 @@ export const TablesProvider = ({ children }) => {
 				setTableHeaders,
 				createCustomerResponse,
 				setCreateCustomerResponse,
+				triggerQuery,
+				setTriggerQuery,
 			}}>
 			{children}
 		</TablesContext.Provider>

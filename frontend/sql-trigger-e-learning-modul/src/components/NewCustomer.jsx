@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { TextInput, Label, Button, Modal } from "flowbite-react"
 import TablesContext from "../context/TablesProvider"
 import axios from "axios"
+import InstructionModal from "./InstructionModal"
 
 function NewCustomer() {
 	const [firstName, setFirstName] = useState("")
@@ -171,7 +172,13 @@ function NewCustomer() {
 						/>
 					</div>
 					<Button type='submit'>Anlegen</Button>
-					<Modal show={openModal} onClose={() => setOpenModal(false)}>
+					<InstructionModal
+						openModal={true}
+						title={instructions.S1S2.title}
+						text1={instructions.S1S2.text1}
+						text2={instructions.S1S2.text2}
+					/>
+					{/* <Modal show={openModal} onClose={() => setOpenModal(false)}>
 						<Modal.Header>
 							<span>{"Tutorial - Schritt [1/4]"}</span>
 						</Modal.Header>
@@ -193,7 +200,7 @@ function NewCustomer() {
 								</Button>
 							</Link>
 						</Modal.Footer>
-					</Modal>
+					</Modal> */}
 				</div>
 			</form>
 		</div>
