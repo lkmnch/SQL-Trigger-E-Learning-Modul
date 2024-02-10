@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react"
 import { Link } from "react-router-dom"
 import { TextInput, Label, Button, Modal } from "flowbite-react"
-import TablesContext from "../context/TablesProvider"
+import AppContext from "../context/AppProvider"
 import axios from "axios"
 import InstructionModal from "./InstructionModal"
 
@@ -15,10 +15,12 @@ function NewCustomer() {
 	const [city, setCity] = useState("")
 	const [address, setAddress] = useState("")
 
-	const { createCustomerResponse, setCreateCustomerResponse } =
-		useContext(TablesContext)
+	const { createCustomerResponse, setCreateCustomerResponse, instructions } =
+		useContext(AppContext)
 
 	const [openModal, setOpenModal] = useState(false)
+
+	const [customerCreated, setCustomerCreated] = useState(false)
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
@@ -171,13 +173,22 @@ function NewCustomer() {
 							onChange={(e) => setAddress(e.target.value)}
 						/>
 					</div>
-					<Button type='submit'>Anlegen</Button>
+					<Button type='submit'>Kunde anlegen</Button>
 					<InstructionModal
 						openModal={true}
 						title={instructions.S1S2.title}
 						text1={instructions.S1S2.text1}
 						text2={instructions.S1S2.text2}
 					/>
+
+					<InstructionModal
+						openModal={openModal}
+						title={instructions.S1S2a.title}
+						text1={instructions.S1S2a.text1}
+						text2={instructions.S1S2a.text2}
+						action={instructions.S1S2a.action}
+					/>
+
 					{/* <Modal show={openModal} onClose={() => setOpenModal(false)}>
 						<Modal.Header>
 							<span>{"Tutorial - Schritt [1/4]"}</span>

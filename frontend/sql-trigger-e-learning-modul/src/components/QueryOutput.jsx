@@ -1,8 +1,8 @@
 import React, { useContext } from "react"
-import TablesContext from "../context/TablesProvider"
+import AppContext from "../context/AppProvider"
 
 const QueryOutput = () => {
-	const { data, tableHeaders } = useContext(TablesContext)
+	const { data, tableHeaders } = useContext(AppContext)
 	return (
 		<>
 			{data.length ? (

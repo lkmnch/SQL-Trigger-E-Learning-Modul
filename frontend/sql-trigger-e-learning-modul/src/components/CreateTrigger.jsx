@@ -1,59 +1,21 @@
 import { DndContext } from "@dnd-kit/core"
 import { arrayMove } from "@dnd-kit/sortable"
-import { useState } from "react"
+import { useContext, useState } from "react"
 
 import { Card, Button } from "flowbite-react"
-import { HiCheck } from "react-icons/hi"
 import KeywordList from "./KeywordList"
 import InstructionModal from "./InstructionModal"
-import { Link } from "react-router-dom"
 
-function CreateTrigger() {
+import AppContext from "../context/AppProvider"
+
+function CreateTrigger(props) {
 	const [openModal, setOpenModal] = useState(false)
 	const [triggerCreated, setTriggerCreated] = useState(false)
-	const instructions = {
-		S1S2: {
-			title: "Szenario 1 - Schritt 1/3",
-			text1:
-				"Ziehe die SQL-Keywords in der richtigen Reihenfolge in das Query-Feld, um den Trigger zu erstellen.",
-			text2:
-				'Danach auf "Trigger anlegen" damit der Trigger in die DB geschrieben wird.',
-		},
-		S1S2a: {
-			title: "Szenario 1 - Schritt 1/3 - erfolgreich",
-			text1: "Der Trigger wurde erfolgreich in die Datenbank geschrieben.",
-			text2:
-				"Als nächstes überprüfst du ob durch das Anlegen eines Kunden die Anweisung im Trigger ausgeführt wird.",
-			action: (
-				<Link to={"/rental/customer/create"}>
-					<Button>Neuen Kunden anlegen</Button>
-				</Link>
-			),
-		},
-	}
-	const [keywordList, setKeywordList] = useState({
-		Query: [],
-		Keywords: [
-			"SELECT",
-			"INSERT",
-			"UPDATE",
-			"DELETE",
-			"INTO",
-			"CREATE",
-			"TRIGGER",
-			"customer_create_date",
-			"BEFORE",
-			"AFTRER",
-			"ON",
-			"customer",
-			"FOR EACH ROW",
-			"SET",
-			"NEW.create_date",
-			"OLD.create_date",
-			"=",
-			"NOW()",
-		],
-	})
+	const { instructions, triggerKeywords } = useContext(AppContext)
+	console.log(instructions[props.instructions]?.title)
+	const [keywordList, setKeywordList] = useState(
+		props.keywords ? props.keywords : triggerKeywords
+	)
 	const dragEndHandler = (e) => {
 		//console.log(e)
 		//console.log(!e.over)
@@ -153,7 +115,7 @@ function CreateTrigger() {
 							setOpenModal(true)
 							setTriggerCreated(true)
 						}}>
-						Trigger anlegen
+						Ausführen
 					</Button>
 					{Object.keys(keywordList).map((key) => (
 						<KeywordList key={key} title={key} tasks={keywordList[key]} />
@@ -162,18 +124,18 @@ function CreateTrigger() {
 			</DndContext>
 			<InstructionModal
 				openModal={true}
-				title={instructions.S1S2.title}
-				text1={instructions.S1S2.text1}
-				text2={instructions.S1S2.text2}
+				title={instructions[props.instructions].title}
+				text1={instructions[props.instructions].text1}
+				text2={instructions[props.instructions].text2}
 			/>
 			{/* auch überprüfen ob ul li in richtiger Reihenfolge (queryCorrect) */}
 			{triggerCreated ? (
 				<InstructionModal
 					openModal={openModal}
-					title={instructions.S1S2a.title}
-					text1={instructions.S1S2a.text1}
-					text2={instructions.S1S2a.text2}
-					action={instructions.S1S2a.action}
+					title={instructions[props.instructions + "a"].title}
+					text1={instructions[props.instructions + "a"].text1}
+					text2={instructions[props.instructions + "a"].text2}
+					action={instructions[props.instructions + "a"].action}
 				/>
 			) : null}
 		</>

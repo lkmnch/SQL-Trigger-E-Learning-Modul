@@ -1,28 +1,9 @@
-import React, { useContext, useState } from "react"
-import TablesContext from "../context/TablesProvider"
-import axios from "axios"
+import React, { useContext } from "react"
+import AppContext from "../context/AppProvider"
 
 const QueryInput = () => {
-	const baseURL = "http://localhost:3000/plants"
-	const { setData, setTableHeaders } = useContext(TablesContext)
-	const [query, setQuery] = useState("")
-
-	const handleQueryChange = (event) => {
-		setQuery(event.target.value)
-	}
-
-	const handleExecuteQuery = () => {
-		axios.post(baseURL, { query: query }).then((response) => {
-			console.log(response.data)
-			if (Array.isArray(response.data)) {
-				setTableHeaders(Object.keys(response.data[0]))
-				setData(Object.values(response.data))
-			} else {
-				setTableHeaders([])
-				setData([])
-			}
-		})
-	}
+	const { handleExecuteQuery, handleQueryChange, query } =
+		useContext(AppContext)
 	return (
 		<>
 			<button

@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import App from "./App.jsx"
 import "./index.css"
 import { Flowbite } from "flowbite-react"
-import { TablesProvider } from "./context/TablesProvider.jsx"
+import { AppProvider } from "./context/AppProvider.jsx"
 import ErrorPage from "./error-page"
 import RentalMain from "./components/RentalMain"
 import Editor from "./components/Editor.jsx"
@@ -12,6 +12,8 @@ import Welcome from "./components/Welcome.jsx"
 import Syntax from "./components/Syntax.jsx"
 import NewCustomer from "./components/NewCustomer.jsx"
 import CreateTrigger from "./components/CreateTrigger.jsx"
+import OutputCustomerTable from "./components/OutputCustomerTable.jsx"
+
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -35,7 +37,11 @@ const router = createBrowserRouter([
 				path: "rental/customer/create",
 				element: <NewCustomer />,
 			},
-			{ path: "scenario1", element: <CreateTrigger /> },
+			{ path: "scenario1", element: <CreateTrigger instructions={"S1S1"} /> },
+			{
+				path: "scenario1/outputCustomerTable",
+				element: <OutputCustomerTable />,
+			},
 		],
 	},
 ])
@@ -43,9 +49,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
 		<Flowbite>
-			<TablesProvider>
+			<AppProvider>
 				<RouterProvider router={router} />
-			</TablesProvider>
+			</AppProvider>
 		</Flowbite>
 	</React.StrictMode>
 )

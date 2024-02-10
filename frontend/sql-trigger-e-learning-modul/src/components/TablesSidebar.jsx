@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from "react"
 import { HiDatabase } from "react-icons/hi"
-import TablesContext from "../context/TablesProvider"
+import AppContext from "../context/AppProvider"
 import { Sidebar } from "flowbite-react"
 import axios from "axios"
 import { Link } from "react-router-dom"
 
 const TablesSidebar = () => {
 	const { setData, setTableHeaders, tableNames, setTableNames } =
-		useContext(TablesContext)
+		useContext(AppContext)
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -47,6 +47,22 @@ const TablesSidebar = () => {
 			className='h-full fixed top-0 left-0 z-20'
 			aria-label='Sidebar for DB-Tables'>
 			<Sidebar.Items className='pt-14'>
+				<Sidebar.ItemGroup id='other'>
+					<Link to={"/"}>
+						<div className=' flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'>
+							<span className='px-3 flex-1 whitespace-nowrap'>
+								Willkommensseite
+							</span>
+						</div>
+					</Link>
+					<Link to={"/syntax"}>
+						<div className=' flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'>
+							<span className='px-3 flex-1 whitespace-nowrap'>
+								MySQL-Trigger Syntax
+							</span>
+						</div>
+					</Link>
+				</Sidebar.ItemGroup>
 				<Sidebar.ItemGroup>
 					<Link to={"/editor"}>
 						<div className=' flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'>
@@ -78,22 +94,6 @@ const TablesSidebar = () => {
 					</Link>
 					<Sidebar.Item>DVD an Kunden verleihen</Sidebar.Item>
 					<Sidebar.Item>DVD Rückgabe</Sidebar.Item>
-				</Sidebar.ItemGroup>
-				<Sidebar.ItemGroup id='other'>
-					<Link to={"/"}>
-						<div className=' flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'>
-							<span className='px-3 flex-1 whitespace-nowrap'>
-								Willkommensseite
-							</span>
-						</div>
-					</Link>
-					<Link to={"/syntax"}>
-						<div className=' flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'>
-							<span className='px-3 flex-1 whitespace-nowrap'>
-								MySQL-Trigger Syntax
-							</span>
-						</div>
-					</Link>
 				</Sidebar.ItemGroup>
 			</Sidebar.Items>
 		</Sidebar>
