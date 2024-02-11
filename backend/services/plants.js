@@ -13,10 +13,10 @@ const config = require("../config")
 	return { data, meta }
 } */
 
-async function execute(query) {
+async function execute(query, page = 1) {
 	console.log(query)
 	//const result = await db.query(`${query.query}`)
-
+	//const offset = helper.getOffset(page, config.listPerPage)
 	return await db.query(`${query.query}`)
 }
 

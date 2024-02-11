@@ -1,5 +1,5 @@
 import React from "react"
-import CreateTrigger from "./CreateTrigger"
+import CreateQuery from "./CreateQuery"
 import QueryOutput from "./QueryOutput"
 
 function OutputCustomerTable() {
@@ -24,11 +24,13 @@ function OutputCustomerTable() {
 			"OLD.create_date",
 			"=",
 			"NOW()",
+			"*",
+			"FROM",
 		],
 	}
 	return (
-		<div>
-			<CreateTrigger keywords={selectCustomerKeywords} instructions={"S1S3"} />
+		<div className='flex flex-col gap-5'>
+			<CreateQuery keywords={selectCustomerKeywords} instructions={"S1S3"} />
 			<QueryOutput />
 		</div>
 	)

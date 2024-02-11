@@ -8,14 +8,18 @@ import InstructionModal from "./InstructionModal"
 
 import AppContext from "../context/AppProvider"
 
-function CreateTrigger(props) {
+function CreateQuery(props) {
 	const [openModal, setOpenModal] = useState(false)
 	const [triggerCreated, setTriggerCreated] = useState(false)
-	const { instructions, triggerKeywords } = useContext(AppContext)
+	const { instructions, triggerKeywords, handleExecuteQuery, currentPage } =
+		useContext(AppContext)
 	console.log(instructions[props.instructions]?.title)
 	const [keywordList, setKeywordList] = useState(
 		props.keywords ? props.keywords : triggerKeywords
 	)
+	const queryName = Object.keys(keywordList)[0]
+	const queryKeywords = keywordList[queryName].toString().replace(/,/g, " ")
+	console.log(queryKeywords)
 	const dragEndHandler = (e) => {
 		//console.log(e)
 		//console.log(!e.over)
@@ -109,36 +113,40 @@ function CreateTrigger(props) {
 		<>
 			{/* // Attach the dragEnd and dragOver event listeners */}
 			<DndContext onDragEnd={dragEndHandler} onDragOver={dragOverHandler}>
-				<Card className='w-1/2 h-full'>
+				<Card className=' h-1/2'>
+					<div className='flex gap-5'>
+						{Object.keys(keywordList).map((key) => (
+							<KeywordList key={key} title={key} tasks={keywordList[key]} />
+						))}
+					</div>
 					<Button
+						className='w-40'
 						onClick={() => {
 							setOpenModal(true)
 							setTriggerCreated(true)
+							handleExecuteQuery(queryKeywords, currentPage)
 						}}>
 						Ausführen
 					</Button>
-					{Object.keys(keywordList).map((key) => (
-						<KeywordList key={key} title={key} tasks={keywordList[key]} />
-					))}
 				</Card>
 			</DndContext>
 			<InstructionModal
 				openModal={true}
-				title={instructions[props.instructions].title}
-				text1={instructions[props.instructions].text1}
-				text2={instructions[props.instructions].text2}
+				title={instructions[props.instructions]?.title}
+				text1={instructions[props.instructions]?.text1}
+				text2={instructions[props.instructions]?.text2}
 			/>
 			{/* auch überprüfen ob ul li in richtiger Reihenfolge (queryCorrect) */}
 			{triggerCreated ? (
 				<InstructionModal
 					openModal={openModal}
-					title={instructions[props.instructions + "a"].title}
-					text1={instructions[props.instructions + "a"].text1}
-					text2={instructions[props.instructions + "a"].text2}
-					action={instructions[props.instructions + "a"].action}
+					title={instructions[props.instructions + "a"]?.title}
+					text1={instructions[props.instructions + "a"]?.text1}
+					text2={instructions[props.instructions + "a"]?.text2}
+					action={instructions[props.instructions + "a"]?.action}
 				/>
 			) : null}
 		</>
 	)
 }
-export default CreateTrigger
+export default CreateQuery

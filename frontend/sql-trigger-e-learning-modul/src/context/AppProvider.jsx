@@ -21,8 +21,8 @@ export const AppProvider = ({ children }) => {
 		setQuery(event.target.value)
 	}
 
-	const handleExecuteQuery = () => {
-		axios.post(baseURL, { query: query }).then((response) => {
+	const handleExecuteQuery = (query, page) => {
+		axios.post(baseURL, { query: query, page: page }).then((response) => {
 			console.log(response.data)
 			if (Array.isArray(response.data)) {
 				setTableHeaders(Object.keys(response.data[0]))
@@ -36,14 +36,14 @@ export const AppProvider = ({ children }) => {
 
 	const instructions = {
 		S1S1: {
-			title: "Szenario 1 - Schritt 1/3",
+			title: "Szenario 1 - Schritt 1/4",
 			text1:
 				"Ziehe die SQL-Keywords in der richtigen Reihenfolge in das Query-Feld, um den Trigger zu erstellen.",
 			text2:
 				'Danach auf "Trigger anlegen" damit der Trigger in die DB geschrieben wird.',
 		},
 		S1S1a: {
-			title: "Szenario 1 - Schritt 1/3 - erfolgreich",
+			title: "Szenario 1 - Schritt 1/4 - erfolgreich",
 			text1: "Der Trigger wurde erfolgreich in die Datenbank geschrieben.",
 			text2:
 				"Als nächstes überprüfst du ob durch das Anlegen eines Kunden die Anweisung im Trigger ausgeführt wird.",
@@ -54,13 +54,13 @@ export const AppProvider = ({ children }) => {
 			),
 		},
 		S1S2: {
-			title: "Szenario 1 - Schritt 2/3",
+			title: "Szenario 1 - Schritt 2/4",
 			text1: "Du befindest dich auf der neuen Kunden anlegen Seite.",
 			text2:
 				"Fülle die entsprechenden Felder aus und lege dann den Kunden an, was das Event zum Auslösen des Triggers ist",
 		},
 		S1S2a: {
-			title: "Szenario 1 - Schritt 2/3 - erfolgreich",
+			title: "Szenario 1 - Schritt 2/4 - erfolgreich",
 			text1: "Der Kunde wurde erfolgreich in die Kunden-Tabelle geschrieben.",
 			text2:
 				"Als nächstes überprüfst du ob durch das Anlegen des Kunden die Spalte 'create_date' in der Kundentabelle gefüllt wurde.",
@@ -71,14 +71,26 @@ export const AppProvider = ({ children }) => {
 			),
 		},
 		S1S3: {
-			title: "Szenario 1 - Schritt 3/3",
+			title: "Szenario 1 - Schritt 3/4",
 			text1:
 				"Ziehe wieder die Keywords in der richtigen Reihenfolge, um zu schauen, ob der Kunde in der Kundentabelle geschrieben worden ist",
 			text2:
-				"Begutachte die Zeilen und schau ob der Trigger ausgeführt worden ist. Klicke auf die Zelle die durch den Trigger eingefügt wurde.",
+				"Klicke dann wieder auf 'Ausführen', um dir die Kundentabelle auszugeben",
 		},
 		S1S3a: {
-			title: "Szenario 1 - Schritt 3/3 - erfolgreich",
+			title: "Szenario 1 - Schritt 3/4 ",
+			text1:
+				"Sehr gut! Unten siehst du die Kudentabelle, suche deinen angelegten Kunden und begutachte die Zeilen und schau ob der Trigger ausgeführt worden ist. Klicke auf die Zelle die durch den Trigger eingefügt wurde. ",
+			text2: "",
+		},
+		S1S4: {
+			title: "Szenario 1 - Schritt 4/4",
+			text1:
+				"Ziehe wieder die Keywords in der richtigen Reihenfolge, um zu schauen, ob der Kunde in der Kundentabelle geschrieben worden ist",
+			text2: "",
+		},
+		S1S4a: {
+			title: "Szenario 1 - Schritt 4/4 - erfolgreich",
 			text1:
 				"Herzlichen Glückwunsch! Du hast einen deinen SQL-Trigger erfolgreich erstellt und überprüft.",
 			text2:
