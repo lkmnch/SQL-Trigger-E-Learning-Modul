@@ -28,9 +28,14 @@ function OutputCustomerTable() {
 			"FROM",
 		],
 	}
+	const correctQuery = "SELECT * FROM customer"
 	return (
 		<div className='flex flex-col gap-5'>
-			<CreateQuery keywords={selectCustomerKeywords} instructions={"S1S3"} />
+			<CreateQuery
+				keywords={selectCustomerKeywords}
+				correctQuery={correctQuery}
+				instructions={"S1S3"}
+			/>
 			<QueryOutput />
 		</div>
 	)

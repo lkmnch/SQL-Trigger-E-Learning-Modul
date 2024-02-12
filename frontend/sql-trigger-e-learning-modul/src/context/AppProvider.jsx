@@ -80,24 +80,25 @@ export const AppProvider = ({ children }) => {
 		S1S3a: {
 			title: "Szenario 1 - Schritt 3/4 ",
 			text1:
-				"Sehr gut! Unten siehst du die Kudentabelle, suche deinen angelegten Kunden und begutachte die Zeilen und schau ob der Trigger ausgeführt worden ist. Klicke auf die Zelle die durch den Trigger eingefügt wurde. ",
-			text2: "",
+				"Sehr gut! Unten siehst du die Kudentabelle, suche deinen angelegten Kunden und begutachte die Zeilen und schau ob der Trigger ausgeführt worden ist. ",
+			text2: "Klicke auf die Zeile deines Kunden.",
 		},
-		S1S4: {
-			title: "Szenario 1 - Schritt 4/4",
-			text1:
-				"Ziehe wieder die Keywords in der richtigen Reihenfolge, um zu schauen, ob der Kunde in der Kundentabelle geschrieben worden ist",
-			text2: "",
-		},
-		S1S4a: {
+		S1a: {
 			title: "Szenario 1 - Schritt 4/4 - erfolgreich",
 			text1:
-				"Herzlichen Glückwunsch! Du hast einen deinen SQL-Trigger erfolgreich erstellt und überprüft.",
+				"Herzlichen Glückwunsch! Du hast einen SQL-Trigger erfolgreich erstellt und überprüft.",
 			text2:
 				"Wie du sehen kannst wurde 'create-date' gefüllt und somit hat der Trigger funktioniert.",
+			text3:
+				"Du hast das erste Szenario erfolgreich durchlaufen. Du kannst jetzt entweder zurück zur Auswahl oder direkt mit dem zweiten Szenario weiter machen.",
 			action: (
 				<Link to={"/"}>
-					<Button>Zurück zur Szenario auswahl</Button>
+					<Button>Zurück zur Szenarioauswahl</Button>
+				</Link>
+			),
+			action2: (
+				<Link to={"/"}>
+					<Button>Beginne mit Szenario 2</Button>
 				</Link>
 			),
 		},

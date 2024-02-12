@@ -2,7 +2,8 @@ import { DndContext } from "@dnd-kit/core"
 import { arrayMove } from "@dnd-kit/sortable"
 import { useContext, useState } from "react"
 
-import { Card, Button } from "flowbite-react"
+import { Card, Button, Toast } from "flowbite-react"
+import { HiX } from "react-icons/hi"
 import KeywordList from "./KeywordList"
 import InstructionModal from "./InstructionModal"
 
@@ -13,13 +14,25 @@ function CreateQuery(props) {
 	const [triggerCreated, setTriggerCreated] = useState(false)
 	const { instructions, triggerKeywords, handleExecuteQuery, currentPage } =
 		useContext(AppContext)
-	console.log(instructions[props.instructions]?.title)
+
 	const [keywordList, setKeywordList] = useState(
 		props.keywords ? props.keywords : triggerKeywords
 	)
+	console.log(keywordList)
+	const [showToast, setShowToast] = useState(false)
 	const queryName = Object.keys(keywordList)[0]
 	const queryKeywords = keywordList[queryName].toString().replace(/,/g, " ")
-	console.log(queryKeywords)
+
+	const handleRunQuery = () => {
+		if (queryKeywords === props.correctQuery) {
+			setOpenModal(true)
+			setTriggerCreated(true)
+			handleExecuteQuery(queryKeywords, currentPage)
+		} else {
+			setShowToast(true)
+		}
+	}
+
 	const dragEndHandler = (e) => {
 		//console.log(e)
 		//console.log(!e.over)
@@ -50,7 +63,6 @@ function CreateQuery(props) {
 	}
 
 	const dragOverHandler = (e) => {
-		console.log(e)
 		// Check if item is drag into unknown area
 		if (!e.over) return
 
@@ -119,17 +131,22 @@ function CreateQuery(props) {
 							<KeywordList key={key} title={key} tasks={keywordList[key]} />
 						))}
 					</div>
-					<Button
-						className='w-40'
-						onClick={() => {
-							setOpenModal(true)
-							setTriggerCreated(true)
-							handleExecuteQuery(queryKeywords, currentPage)
-						}}>
+					<Button className='w-40' onClick={handleRunQuery}>
 						Ausführen
 					</Button>
 				</Card>
 			</DndContext>
+			{showToast && (
+				<Toast>
+					<div className='inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200'>
+						<HiX />
+					</div>
+					<div className='ml-3 text-sm font-normal'>
+						Query ist falsch, versuche es erneut!
+					</div>
+					<Toast.Toggle onDismiss={() => setShowToast(false)} />
+				</Toast>
+			)}
 			<InstructionModal
 				openModal={true}
 				title={instructions[props.instructions]?.title}

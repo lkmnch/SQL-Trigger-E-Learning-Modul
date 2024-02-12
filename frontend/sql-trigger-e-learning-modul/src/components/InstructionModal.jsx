@@ -14,10 +14,13 @@ function InstructionModal(props) {
 				{/* <Progress progress={0} /> */}
 				<p className='dark:text-white'>{props.text1}</p>
 				<p className='dark:text-white'>{props.text2}</p>
+				<p className='dark:text-white'>{props.text3}</p>
 			</Modal.Body>
 			<Modal.Footer>
 				{props.action ? (
-					props.action
+					<div className='flex gap-4'>
+						{props.action} {props.action2}
+					</div>
 				) : (
 					<Button onClick={() => setShowInstructions(false)}>OK</Button>
 				)}

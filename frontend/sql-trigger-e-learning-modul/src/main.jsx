@@ -14,6 +14,8 @@ import NewCustomer from "./components/NewCustomer.jsx"
 import CreateQuery from "./components/CreateQuery.jsx"
 import OutputCustomerTable from "./components/OutputCustomerTable.jsx"
 
+const correctQuery =
+	"CREATE TRIGGER customer_create_date BEFORE INSERT ON customer FOR EACH ROW SET NEW.create_date = NOW()"
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -37,7 +39,12 @@ const router = createBrowserRouter([
 				path: "rental/customer/create",
 				element: <NewCustomer />,
 			},
-			{ path: "scenario1", element: <CreateQuery instructions={"S1S1"} /> },
+			{
+				path: "scenario1",
+				element: (
+					<CreateQuery correctQuery={correctQuery} instructions={"S1S1"} />
+				),
+			},
 			{
 				path: "scenario1/outputCustomerTable",
 				element: <OutputCustomerTable />,
