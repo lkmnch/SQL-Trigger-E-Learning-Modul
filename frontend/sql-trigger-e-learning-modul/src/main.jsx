@@ -15,29 +15,24 @@ import CreateQuery from "./components/CreateQuery.jsx"
 import OutputCustomerTable from "./components/OutputCustomerTable.jsx"
 
 const correctQuery =
-	"CREATE TRIGGER customer_create_date BEFORE INSERT ON customer FOR EACH ROW SET NEW.create_date = NOW()"
+	"CREATE TRIGGER customer_create_date BEFORE INSERT ON customer FOR EACH ROW SET NEW.create_date = NOW() ;"
 
 const triggerKeywords = {
 	queryName: "Trigger-Query",
 	keywords: [
-		"SELECT",
+		"NOW()",
 		"INSERT",
-		"UPDATE",
-		"DELETE",
-		"INTO",
-		"CREATE",
 		"TRIGGER",
 		"customer_create_date",
 		"BEFORE",
-		"AFTRER",
+		"CREATE",
 		"ON",
+		";",
 		"customer",
+		"NEW.create_date",
 		"FOR EACH ROW",
 		"SET",
-		"NEW.create_date",
-		"OLD.create_date",
 		"=",
-		"NOW()",
 	],
 }
 

@@ -21,12 +21,10 @@ function CreateQuery({
 }) {
 	const [openModal, setOpenModal] = useState(false)
 	const [triggerCreated, setTriggerCreated] = useState(false)
-	const { instructions, triggerKeywords, handleExecuteQuery, currentPage } =
+	const { instructions, handleExecuteQuery, currentPage } =
 		useContext(AppContext)
 
-	// const [keywordList, setKeywordList] = useState(
-	// 	props.keywords ? props.keywords : triggerKeywords
-	// )
+	const [keywordList, setKeywordList] = useState(keywords)
 
 	const [showToast, setShowToast] = useState(false)
 
@@ -34,6 +32,7 @@ function CreateQuery({
 	const [droppedQuery, setDroppedQuery] = useState("")
 
 	const handleRunQuery = () => {
+		console.log(droppedQuery)
 		if (droppedQuery.trim() == correctQuery.trim()) {
 			setOpenModal(true)
 			setTriggerCreated(true)
@@ -44,16 +43,23 @@ function CreateQuery({
 		}
 	}
 
-	const handleDragEnd = (event) => {
-		console.log("onDragEndEvent:", event)
+	const handleDragOver = (event) => {
 		const queryKeyword = event.active.data.current
-		if (event.over && event.over.id === "query-droppable") {
+		if (event.over && event.over.id == "query-droppable") {
 			setIsDropped(true)
 			setDroppedQuery((prevQuery) => prevQuery + " " + queryKeyword)
+			const index = keywordList.indexOf(event.active.data.current)
+			if (index !== -1) {
+				const updatedKeywords = [...keywordList] //array ist ein reference-type deswegen muss copy von keywordList erstellt werden
+				updatedKeywords.splice(index, 1)
+				setKeywordList(updatedKeywords)
+			}
 		}
 	}
-	const handleDragOver = (event) => {
-		console.log("onDragOverEvent:", event)
+
+	const handleReset = () => {
+		setDroppedQuery("")
+		setKeywordList(keywords)
 	}
 
 	const shouldStyleBold = (word) => {
@@ -67,7 +73,7 @@ function CreateQuery({
 	return (
 		<div className='h-1/3'>
 			<div className='h-full bg-gray-800 p-3 rounded-md flex flex-col gap-4'>
-				<DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
+				<DndContext onDragOver={handleDragOver}>
 					<QueryDroppableArea queryName={queryName}>
 						{isDropped && (
 							<div className='flex gap-1'>
@@ -83,16 +89,21 @@ function CreateQuery({
 							</div>
 						)}
 					</QueryDroppableArea>
-					<KeywordList keywords={keywords} />
+					<KeywordList keywords={keywordList} />
 					<div className='flex gap-4'>
 						<Button onClick={() => handleRunQuery()} className='w-40'>
 							Query ausführen
 						</Button>
+						<Button onClick={() => handleReset()} color='gray' className='w-40'>
+							Query-Feld zurücksetzen
+						</Button>
 						<Button
-							onClick={() => setDroppedQuery("")}
+							onClick={() => (
+								setIsDropped(true), setDroppedQuery(correctQuery)
+							)}
 							color='gray'
 							className='w-40'>
-							Query-Feld zurücksetzen
+							Lösung anzeigen
 						</Button>
 					</div>
 					{showToast && (
