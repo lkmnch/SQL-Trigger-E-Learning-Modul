@@ -66,7 +66,9 @@ export const AppProvider = ({ children }) => {
 				"Als nächstes überprüfst du ob durch das Anlegen des Kunden die Spalte 'create_date' in der Kundentabelle gefüllt wurde.",
 			action: (
 				<Link to={"/scenario1/outputCustomerTable"}>
-					<Button>Kundentabelle ausgeben lassen</Button>
+					<Button onClick={() => setData([])}>
+						Kundentabelle ausgeben lassen
+					</Button>
 				</Link>
 			),
 		},
@@ -93,39 +95,17 @@ export const AppProvider = ({ children }) => {
 				"Du hast das erste Szenario erfolgreich durchlaufen. Du kannst jetzt entweder zurück zur Auswahl oder direkt mit dem zweiten Szenario weiter machen.",
 			action: (
 				<Link to={"/"}>
-					<Button>Zurück zur Szenarioauswahl</Button>
+					<Button onClick={() => setData([])}>
+						Zurück zur Szenarioauswahl
+					</Button>
 				</Link>
 			),
 			action2: (
 				<Link to={"/"}>
-					<Button>Beginne mit Szenario 2</Button>
+					<Button onClick={() => setData([])}>Beginne mit Szenario 2</Button>
 				</Link>
 			),
 		},
-	}
-
-	const triggerKeywords = {
-		"Trigger-Query": [],
-		Keywords: [
-			"SELECT",
-			"INSERT",
-			"UPDATE",
-			"DELETE",
-			"INTO",
-			"CREATE",
-			"TRIGGER",
-			"customer_create_date",
-			"BEFORE",
-			"AFTRER",
-			"ON",
-			"customer",
-			"FOR EACH ROW",
-			"SET",
-			"NEW.create_date",
-			"OLD.create_date",
-			"=",
-			"NOW()",
-		],
 	}
 
 	return (
@@ -142,7 +122,6 @@ export const AppProvider = ({ children }) => {
 				triggerQuery,
 				setTriggerQuery,
 				instructions,
-				triggerKeywords,
 				query,
 				handleQueryChange,
 				handleExecuteQuery,

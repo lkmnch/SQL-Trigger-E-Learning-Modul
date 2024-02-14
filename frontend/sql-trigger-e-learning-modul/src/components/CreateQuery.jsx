@@ -1,169 +1,131 @@
-import { DndContext } from "@dnd-kit/core"
-import { arrayMove } from "@dnd-kit/sortable"
 import { useContext, useState } from "react"
+import { DndContext } from "@dnd-kit/core"
 
-import { Card, Button, Toast } from "flowbite-react"
+import { Button, Toast } from "flowbite-react"
 import { HiX } from "react-icons/hi"
-import KeywordList from "./KeywordList"
+
 import InstructionModal from "./InstructionModal"
 
 import AppContext from "../context/AppProvider"
 
-function CreateQuery(props) {
+import KeywordList from "./KeywordList"
+import QueryDroppableArea from "./QueryDroppableArea"
+
+import mysqlKeywords from "../sqlKeywords"
+
+function CreateQuery({
+	queryName,
+	keywords,
+	correctQuery,
+	instructionsNumber,
+}) {
 	const [openModal, setOpenModal] = useState(false)
 	const [triggerCreated, setTriggerCreated] = useState(false)
 	const { instructions, triggerKeywords, handleExecuteQuery, currentPage } =
 		useContext(AppContext)
 
-	const [keywordList, setKeywordList] = useState(
-		props.keywords ? props.keywords : triggerKeywords
-	)
-	console.log(keywordList)
+	// const [keywordList, setKeywordList] = useState(
+	// 	props.keywords ? props.keywords : triggerKeywords
+	// )
+
 	const [showToast, setShowToast] = useState(false)
-	const queryName = Object.keys(keywordList)[0]
-	const queryKeywords = keywordList[queryName].toString().replace(/,/g, " ")
+
+	const [isDropped, setIsDropped] = useState(false)
+	const [droppedQuery, setDroppedQuery] = useState("")
 
 	const handleRunQuery = () => {
-		if (queryKeywords === props.correctQuery) {
+		if (droppedQuery.trim() == correctQuery.trim()) {
 			setOpenModal(true)
 			setTriggerCreated(true)
-			handleExecuteQuery(queryKeywords, currentPage)
+			handleExecuteQuery(droppedQuery, currentPage)
+			setShowToast(false)
 		} else {
 			setShowToast(true)
 		}
 	}
 
-	const dragEndHandler = (e) => {
-		//console.log(e)
-		//console.log(!e.over)
-		// Check if item is drag into unknown area
-		if (!e.over || !e.active.data.current || !e.over.data.current) return
-
-		// Check if item position is the same
-		if (e.active.id === e.over.id) return
-
-		// Check if item is moved outside of the column
-		if (
-			e.active.data.current.sortable.containerId !==
-			e.over.data.current.sortable.containerId
-		)
-			return
-
-		// Sort the items list order based on item target position
-		// draggable von x - zu y moven
-		const containerName = e.active.data.current.sortable.containerId
-		setKeywordList((keywordList) => {
-			const temp = { ...keywordList }
-			if (!e.over) return temp
-			const oldIdx = temp[containerName].indexOf(e.active.id.toString())
-			const newIdx = temp[containerName].indexOf(e.over.id.toString())
-			temp[containerName] = arrayMove(temp[containerName], oldIdx, newIdx)
-			return temp
-		})
+	const handleDragEnd = (event) => {
+		console.log("onDragEndEvent:", event)
+		const queryKeyword = event.active.data.current
+		if (event.over && event.over.id === "query-droppable") {
+			setIsDropped(true)
+			setDroppedQuery((prevQuery) => prevQuery + " " + queryKeyword)
+		}
+	}
+	const handleDragOver = (event) => {
+		console.log("onDragOverEvent:", event)
 	}
 
-	const dragOverHandler = (e) => {
-		// Check if item is drag into unknown area
-		if (!e.over) return
-
-		// Get the initial and target sortable list name
-		const initialContainer = e.active.data.current?.sortable?.containerId
-		const targetContainer = e.over.data.current?.sortable?.containerId
-
-		// if there are none initial sortable list name, then item is not sortable item
-		if (!initialContainer) return
-
-		// Order the item list based on target item position
-		setKeywordList((keywordList) => {
-			const temp = { ...keywordList }
-
-			// If there are no target container then item is moved into a droppable zone
-			// droppable = whole area of the sortable list (works when the sortable list is empty)
-			if (!targetContainer) {
-				// If item is already there then don't re-added it
-				if (keywordList[e.over.id].includes(e.active.id.toString())) return temp
-
-				// Remove item from it's initial container
-				temp[initialContainer] = temp[initialContainer].filter(
-					(task) => task !== e.active.id.toString()
-				)
-
-				// Add item to it's target container which the droppable zone belongs to
-				temp[e.over.id].push(e.active.id.toString())
-
-				return temp
-			}
-
-			// If the item is drag around in the same container then just reorder the list
-			if (initialContainer === targetContainer) {
-				//console.log("item dragged in same container")
-				const oldIdx = temp[initialContainer].indexOf(e.active.id.toString())
-				const newIdx = temp[initialContainer].indexOf(e.over.id.toString())
-				temp[initialContainer] = arrayMove(
-					temp[initialContainer],
-					oldIdx,
-					newIdx
-				)
-			} else {
-				// If the item is drag into another different container
-				console.log("Item dragged to another container")
-				// Remove item from it's initial container
-				temp[initialContainer] = temp[initialContainer].filter(
-					(task) => task !== e.active.id.toString()
-				)
-
-				// Add item to it's target container
-				const newIdx = temp[targetContainer].indexOf(e.over.id.toString())
-				temp[targetContainer].splice(newIdx, 0, e.active.id.toString())
-			}
-
-			return temp
-		})
+	const shouldStyleBold = (word) => {
+		if (mysqlKeywords.includes(word)) {
+			return true
+		} else {
+			return false
+		}
 	}
 
 	return (
-		<>
-			{/* // Attach the dragEnd and dragOver event listeners */}
-			<DndContext onDragEnd={dragEndHandler} onDragOver={dragOverHandler}>
-				<Card className=' h-1/2'>
-					<div className='flex gap-5'>
-						{Object.keys(keywordList).map((key) => (
-							<KeywordList key={key} title={key} tasks={keywordList[key]} />
-						))}
+		<div className='h-1/3'>
+			<div className='h-full bg-gray-800 p-3 rounded-md flex flex-col gap-4'>
+				<DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
+					<QueryDroppableArea queryName={queryName}>
+						{isDropped && (
+							<div className='flex gap-1'>
+								{droppedQuery.split(" ").map((word, index) => (
+									<span
+										key={index}
+										className={` ${
+											shouldStyleBold(word) ? "font-bold" : "font-normal"
+										}`}>
+										{word}
+									</span>
+								))}
+							</div>
+						)}
+					</QueryDroppableArea>
+					<KeywordList keywords={keywords} />
+					<div className='flex gap-4'>
+						<Button onClick={() => handleRunQuery()} className='w-40'>
+							Query ausführen
+						</Button>
+						<Button
+							onClick={() => setDroppedQuery("")}
+							color='gray'
+							className='w-40'>
+							Query-Feld zurücksetzen
+						</Button>
 					</div>
-					<Button className='w-40' onClick={handleRunQuery}>
-						Ausführen
-					</Button>
-				</Card>
-			</DndContext>
-			{showToast && (
-				<Toast>
-					<div className='inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200'>
-						<HiX />
-					</div>
-					<div className='ml-3 text-sm font-normal'>
-						Query ist falsch, versuche es erneut!
-					</div>
-					<Toast.Toggle onDismiss={() => setShowToast(false)} />
-				</Toast>
-			)}
+					{showToast && (
+						<Toast>
+							<div className='inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200'>
+								<HiX />
+							</div>
+							<div className='ml-3 text-sm font-normal'>
+								Query ist falsch, versuche es erneut!
+							</div>
+							<Toast.Toggle onDismiss={() => setShowToast(false)} />
+						</Toast>
+					)}
+				</DndContext>
+			</div>
+
 			<InstructionModal
 				openModal={true}
-				title={instructions[props.instructions]?.title}
-				text1={instructions[props.instructions]?.text1}
-				text2={instructions[props.instructions]?.text2}
+				title={instructions[instructionsNumber]?.title}
+				text1={instructions[instructionsNumber]?.text1}
+				text2={instructions[instructionsNumber]?.text2}
 			/>
 			{/* auch überprüfen ob ul li in richtiger Reihenfolge (queryCorrect) */}
 			{triggerCreated ? (
 				<InstructionModal
 					openModal={openModal}
-					title={instructions[props.instructions + "a"]?.title}
-					text1={instructions[props.instructions + "a"]?.text1}
-					text2={instructions[props.instructions + "a"]?.text2}
-					action={instructions[props.instructions + "a"]?.action}
+					title={instructions[instructionsNumber + "a"]?.title}
+					text1={instructions[instructionsNumber + "a"]?.text1}
+					text2={instructions[instructionsNumber + "a"]?.text2}
+					action={instructions[instructionsNumber + "a"]?.action}
 				/>
 			) : null}
-		</>
+		</div>
 	)
 }
 export default CreateQuery

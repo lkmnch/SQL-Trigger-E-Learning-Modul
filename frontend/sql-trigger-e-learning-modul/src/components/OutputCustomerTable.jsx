@@ -4,8 +4,8 @@ import QueryOutput from "./QueryOutput"
 
 function OutputCustomerTable() {
 	const selectCustomerKeywords = {
-		"Select-Customers-Query": [],
-		Keywords: [
+		queryName: "Select-Customers-Query",
+		keywords: [
 			"SELECT",
 			"INSERT",
 			"UPDATE",
@@ -15,7 +15,7 @@ function OutputCustomerTable() {
 			"TRIGGER",
 			"customer_create_date",
 			"BEFORE",
-			"AFTRER",
+			"AFTER",
 			"ON",
 			"customer",
 			"FOR EACH ROW",
@@ -32,9 +32,10 @@ function OutputCustomerTable() {
 	return (
 		<div className='flex flex-col gap-5'>
 			<CreateQuery
-				keywords={selectCustomerKeywords}
+				queryName={selectCustomerKeywords.queryName}
+				keywords={selectCustomerKeywords.keywords}
 				correctQuery={correctQuery}
-				instructions={"S1S3"}
+				instructionsNumber={"S1S3"}
 			/>
 			<QueryOutput />
 		</div>

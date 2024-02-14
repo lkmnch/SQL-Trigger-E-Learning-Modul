@@ -22,7 +22,7 @@ const QueryOutput = () => {
 			row.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
 			row.last_name.toLowerCase().includes(searchQuery.toLowerCase())
 	)
-
+	console.log(filteredData)
 	const itemsPerPage = 10
 	const maxPages = Math.ceil(filteredData.length / itemsPerPage)
 
@@ -51,13 +51,14 @@ const QueryOutput = () => {
 
 	const handleSearchChange = (e) => {
 		setSearchQuery(e.target.value)
+		setCurrentPage(1)
 	}
 
 	return (
-		<>
+		<div className='h-2/3'>
 			{data.length ? (
 				<div className='relative shadow-md sm:rounded-lg flex flex-col gap-4'>
-					<div className='pb-4 bg-white dark:bg-gray-900'>
+					<div className='pb-4  bg-white dark:bg-gray-900 flex  gap-4 items-center'>
 						<label htmlFor='table-search' className='sr-only'>
 							Search
 						</label>
@@ -87,6 +88,16 @@ const QueryOutput = () => {
 								onChange={handleSearchChange}
 							/>
 						</div>
+						{showToast && (
+							<Toast className='max-w-full h-10 mt-1'>
+								<div className='inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200'>
+									<HiX />
+								</div>
+								<div className='ml-3 text-sm font-normal'>
+									{`${clickedCustomer} ist nicht dein angelegter Kunde`}{" "}
+								</div>
+							</Toast>
+						)}
 					</div>
 					<Table
 						hoverable
@@ -137,17 +148,7 @@ const QueryOutput = () => {
 							showIcons
 						/>
 					</div>
-					{showToast && (
-						<Toast>
-							<div className='inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200'>
-								<HiX />
-							</div>
-							<div className='ml-3 text-sm font-normal'>
-								{`${clickedCustomer} ist nicht dein angelegter Kunde`}{" "}
-							</div>
-							<Toast.Toggle onDismiss={() => setShowToast(false)} />
-						</Toast>
-					)}
+
 					<InstructionModal
 						openModal={openModal}
 						title={instructions.S1a?.title}
@@ -161,7 +162,7 @@ const QueryOutput = () => {
 			) : (
 				<div className='dark:text-white'>Keine Ausgabe, führe Query aus!</div>
 			)}
-		</>
+		</div>
 	)
 }
 

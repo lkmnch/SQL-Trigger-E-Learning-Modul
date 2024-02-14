@@ -16,6 +16,31 @@ import OutputCustomerTable from "./components/OutputCustomerTable.jsx"
 
 const correctQuery =
 	"CREATE TRIGGER customer_create_date BEFORE INSERT ON customer FOR EACH ROW SET NEW.create_date = NOW()"
+
+const triggerKeywords = {
+	queryName: "Trigger-Query",
+	keywords: [
+		"SELECT",
+		"INSERT",
+		"UPDATE",
+		"DELETE",
+		"INTO",
+		"CREATE",
+		"TRIGGER",
+		"customer_create_date",
+		"BEFORE",
+		"AFTRER",
+		"ON",
+		"customer",
+		"FOR EACH ROW",
+		"SET",
+		"NEW.create_date",
+		"OLD.create_date",
+		"=",
+		"NOW()",
+	],
+}
+
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -42,7 +67,12 @@ const router = createBrowserRouter([
 			{
 				path: "scenario1",
 				element: (
-					<CreateQuery correctQuery={correctQuery} instructions={"S1S1"} />
+					<CreateQuery
+						queryName={triggerKeywords.queryName}
+						keywords={triggerKeywords.keywords}
+						correctQuery={correctQuery}
+						instructionsNumber={"S1S1"}
+					/>
 				),
 			},
 			{
