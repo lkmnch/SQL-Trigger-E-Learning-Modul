@@ -49,7 +49,7 @@ export const AppProvider = ({ children }) => {
 				"Als nächstes überprüfst du ob durch das Anlegen eines Kunden die Anweisung im Trigger ausgeführt wird.",
 			action: (
 				<Link to={"/rental/customer/create"}>
-					<Button>Neuen Kunden anlegen</Button>
+					<Button className='bg-darkgreen'>Neuen Kunden anlegen</Button>
 				</Link>
 			),
 		},
@@ -66,7 +66,7 @@ export const AppProvider = ({ children }) => {
 				"Als nächstes überprüfst du ob durch das Anlegen des Kunden die Spalte 'create_date' in der Kundentabelle gefüllt wurde.",
 			action: (
 				<Link to={"/scenario1/outputCustomerTable"}>
-					<Button onClick={() => setData([])}>
+					<Button className='bg-darkgreen' onClick={() => setData([])}>
 						Kundentabelle ausgeben lassen
 					</Button>
 				</Link>
@@ -95,14 +95,16 @@ export const AppProvider = ({ children }) => {
 				"Du hast das erste Szenario erfolgreich durchlaufen. Du kannst jetzt entweder zurück zur Auswahl oder direkt mit dem zweiten Szenario weiter machen.",
 			action: (
 				<Link to={"/"}>
-					<Button onClick={() => setData([])}>
+					<Button className='bg-darkgreen' onClick={() => setData([])}>
 						Zurück zur Szenarioauswahl
 					</Button>
 				</Link>
 			),
 			action2: (
 				<Link to={"/"}>
-					<Button onClick={() => setData([])}>Beginne mit Szenario 2</Button>
+					<Button className='bg-darkgreen' onClick={() => setData([])}>
+						Beginne mit Szenario 2
+					</Button>
 				</Link>
 			),
 		},

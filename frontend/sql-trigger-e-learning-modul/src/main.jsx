@@ -6,13 +6,15 @@ import "./index.css"
 import { Flowbite } from "flowbite-react"
 import { AppProvider } from "./context/AppProvider.jsx"
 import ErrorPage from "./error-page"
-import RentalMain from "./components/RentalMain"
+import RentalMain from "./garbage/RentalMain.jsx"
 import Editor from "./components/Editor.jsx"
-import Welcome from "./components/Welcome.jsx"
-import Syntax from "./components/Syntax.jsx"
+
+import Syntax from "./garbage/Syntax.jsx"
 import NewCustomer from "./components/NewCustomer.jsx"
 import CreateQuery from "./components/CreateQuery.jsx"
 import OutputCustomerTable from "./components/OutputCustomerTable.jsx"
+import Welcome from "./components/Welcome.jsx"
+import Scenario_1 from "./components/Scenario_1.jsx"
 
 const correctQuery =
 	"CREATE TRIGGER customer_create_date BEFORE INSERT ON customer FOR EACH ROW SET NEW.create_date = NOW() ;"
@@ -43,7 +45,7 @@ const router = createBrowserRouter([
 		errorElement: <ErrorPage />,
 		children: [
 			{ path: "/", element: <Welcome />, errorElement: <ErrorPage /> },
-			{ path: "/syntax", element: <Syntax />, errorElement: <ErrorPage /> },
+			{ path: "/hilfe", element: <Syntax />, errorElement: <ErrorPage /> },
 			{
 				path: "/editor",
 				element: <Editor />,
@@ -61,6 +63,10 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "scenario1",
+				element: <Scenario_1 />,
+			},
+			{
+				path: "scenario1/createTriggerQuery",
 				element: (
 					<CreateQuery
 						queryName={triggerKeywords.queryName}

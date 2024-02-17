@@ -1,8 +1,8 @@
 import { useContext, useState } from "react"
 import { DndContext } from "@dnd-kit/core"
 
-import { Button, Toast } from "flowbite-react"
-import { HiX } from "react-icons/hi"
+import { Button, Toast, Alert } from "flowbite-react"
+import { HiInformationCircle } from "react-icons/hi"
 
 import InstructionModal from "./InstructionModal"
 
@@ -26,7 +26,7 @@ function CreateQuery({
 
 	const [keywordList, setKeywordList] = useState(keywords)
 
-	const [showToast, setShowToast] = useState(false)
+	const [showAlert, setShowAlert] = useState(false)
 
 	const [isDropped, setIsDropped] = useState(false)
 	const [droppedQuery, setDroppedQuery] = useState("")
@@ -37,9 +37,9 @@ function CreateQuery({
 			setOpenModal(true)
 			setTriggerCreated(true)
 			handleExecuteQuery(droppedQuery, currentPage)
-			setShowToast(false)
+			setShowAlert(false)
 		} else {
-			setShowToast(true)
+			setShowAlert(true)
 		}
 	}
 
@@ -60,6 +60,7 @@ function CreateQuery({
 	const handleReset = () => {
 		setDroppedQuery("")
 		setKeywordList(keywords)
+		setShowAlert(false)
 	}
 
 	const shouldStyleBold = (word) => {
@@ -71,8 +72,8 @@ function CreateQuery({
 	}
 
 	return (
-		<div className='h-1/3'>
-			<div className='h-full bg-gray-800 p-3 rounded-md flex flex-col gap-4'>
+		<div>
+			<div className=' bg-darkgreen p-3 rounded-md flex flex-col gap-4'>
 				<DndContext onDragOver={handleDragOver}>
 					<QueryDroppableArea queryName={queryName}>
 						{isDropped && (
@@ -91,7 +92,7 @@ function CreateQuery({
 					</QueryDroppableArea>
 					<KeywordList keywords={keywordList} />
 					<div className='flex gap-4'>
-						<Button onClick={() => handleRunQuery()} className='w-40'>
+						<Button onClick={() => handleRunQuery()} className='w-40 bg-brown'>
 							Query ausführen
 						</Button>
 						<Button onClick={() => handleReset()} color='gray' className='w-40'>
@@ -99,23 +100,21 @@ function CreateQuery({
 						</Button>
 						<Button
 							onClick={() => (
-								setIsDropped(true), setDroppedQuery(correctQuery)
+								setIsDropped(true),
+								setDroppedQuery(correctQuery),
+								setShowAlert(false)
 							)}
 							color='gray'
 							className='w-40'>
 							Lösung anzeigen
 						</Button>
 					</div>
-					{showToast && (
-						<Toast>
-							<div className='inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200'>
-								<HiX />
-							</div>
-							<div className='ml-3 text-sm font-normal'>
+					{showAlert && (
+						<Alert color='failure' icon={HiInformationCircle}>
+							<div className='ml-3 text-sm font-medium '>
 								Query ist falsch, versuche es erneut!
 							</div>
-							<Toast.Toggle onDismiss={() => setShowToast(false)} />
-						</Toast>
+						</Alert>
 					)}
 				</DndContext>
 			</div>

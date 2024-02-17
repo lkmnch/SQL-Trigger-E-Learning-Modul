@@ -4,113 +4,64 @@ import { Card, Button, Tabs } from "flowbite-react"
 
 function Welcome() {
 	return (
-		<Card className='w-2/4 '>
-			<h1 className='text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
-				Herzlich Willkommen auf SQL-Trigger verstehen!
-			</h1>
-			<p className='font-normal text-gray-700 dark:text-gray-400'>
-				In diesem interaktiven E-Learning Modul lernst du, anhand einer
-				DVD-Verleihungssoftware wie SQL-Trigger funktionieren und wo diese zum
-				Einsatz kommen.
-			</p>
-			<p className='font-normal text-gray-700 dark:text-gray-400'>
-				Je nach RDBMS unterscheiden sich SQL-Trigger in ihrer Syntax und
-				funktionsweise minimal. In diesem Modul werden SQL-Trigger aufgezeigt,
-				wie sie in MySQL eingesetzt werden.
-			</p>
-			<p className='font-normal text-gray-700 dark:text-gray-400'>
-				In 4 verschiedene Szenarien, werden dir Möglichkeiten gezeigt, wie du
-				einen SQL-Trigger einsetzen kannst.
-			</p>
-
-			<Tabs>
-				<Tabs.Item title='Szenario 1'>
-					<p className='font-medium text-gray-800 dark:text-white'>
-						Im ersten Szenario musst du einen Trigger erstellen, welcher beim
-						Anlegen eines neuen Kunden getriggert wird. Dieser Trigger soll
-						sicherstellen, dass immer wenn ein neuer Kunde angelegt wird auch
-						das aktuelle Datum und Uhrzeit, dem neuen Eintrag ergänzt werden
-					</p>
-					<Link to={"scenario1"}>
-						<Button className='mt-5'>
-							Szenario 1 starten!
-							<svg
-								className='-mr-1 ml-2 h-4 w-4'
-								fill='currentColor'
-								viewBox='0 0 20 20'
-								xmlns='http://www.w3.org/2000/svg'>
-								<path
-									fillRule='evenodd'
-									d='M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z'
-									clipRule='evenodd'
-								/>
-							</svg>
-						</Button>
-					</Link>
-				</Tabs.Item>
-				<Tabs.Item title='Szenario 2'>
-					<p className='font-medium text-gray-800 dark:text-white'></p>
-					<Button className='mt-5'>
-						Szenario 2 starten!
-						<svg
-							className='-mr-1 ml-2 h-4 w-4'
-							fill='currentColor'
-							viewBox='0 0 20 20'
-							xmlns='http://www.w3.org/2000/svg'>
-							<path
-								fillRule='evenodd'
-								d='M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z'
-								clipRule='evenodd'
-							/>
-						</svg>
+		<div className='flex flex-col gap-4'>
+			<Card>
+				<h1 className='text-4xl font-bold tracking-tight text-gray-900 dark:text-white'>
+					Herzlich Willkommen auf SQL-Trigger verstehen!
+				</h1>
+				<p className='text-xl font-normal text-gray-900 dark:text-gray-400'>
+					In diesem interaktiven E-Learning Modul kannst du lernen, wie
+					SQL-Trigger funktionieren. Es handelt sich hier bei um eine Art
+					Simualtion eines Webshops mit Komponenten mit denen
+					Datenbankinteraktionen möglich sind. In verschiedenen Szenarien wirst
+					du bestimmte Trigger erstellen, um die Anforderungen des jeweiligen
+					Szenarios zu erfüllen sowie Kunden anlegen, Bestellungen verändern
+					oder auch Produkte auswählen und die entsprechenden Datenbanktabellen
+					überprüfen, ob deine definierten Trigger auch das gemacht haben was
+					sie machen sollten.
+				</p>
+				<p className='text-xl font-normal text-gray-900 dark:text-gray-400'>
+					Je nach RDBMS unterscheiden sich SQL-Trigger in ihrer Syntax und
+					funktionsweise. In diesem Modul werden SQL-Trigger aufgezeigt, wie sie
+					in MySQL eingesetzt werden.
+				</p>
+				<p className='text-xl font-normal text-gray-900 dark:text-gray-400'>
+					Die Szenarios können unabhängig von einander durchgeführt werden.
+				</p>
+			</Card>
+			<div className='bg-white grid grid-cols-2 gap-4 p-4 rounded-md'>
+				<Link to={"/scenario1"} className='w-full'>
+					<Button className=' bg-darkgreen w-full'>
+						<span className='text-2xl'>Automatisches Zeitstempeln</span>
 					</Button>
-				</Tabs.Item>
-				<Tabs.Item title='Szenario 3'>
-					<p className='font-medium text-gray-800 dark:text-white'>
-						Im ersten Szenario musst du einen Trigger erstellen, welcher beim
-						Anlegen eines neuen Kunden getriggert wird. Dieser Trigger soll
-						sicherstellen, dass immer wenn ein neuer Kunde angelegt wird auch
-						das aktuelle Datum und Uhrzeit, dem neuen Eintrag ergänzt werden
-					</p>
-					<Button className='mt-5'>
-						Szenario 3 starten!
-						<svg
-							className='-mr-1 ml-2 h-4 w-4'
-							fill='currentColor'
-							viewBox='0 0 20 20'
-							xmlns='http://www.w3.org/2000/svg'>
-							<path
-								fillRule='evenodd'
-								d='M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z'
-								clipRule='evenodd'
-							/>
-						</svg>
-					</Button>
-				</Tabs.Item>
-				<Tabs.Item title='Szenario 4'>
-					<p className='font-medium text-gray-800 dark:text-white'>
-						Im ersten Szenario musst du einen Trigger erstellen, welcher beim
-						Anlegen eines neuen Kunden getriggert wird. Dieser Trigger soll
-						sicherstellen, dass immer wenn ein neuer Kunde angelegt wird auch
-						das aktuelle Datum und Uhrzeit, dem neuen Eintrag ergänzt werden
-					</p>
-					<Button className='mt-5'>
-						Szenario 4 starten!
-						<svg
-							className='-mr-1 ml-2 h-4 w-4'
-							fill='currentColor'
-							viewBox='0 0 20 20'
-							xmlns='http://www.w3.org/2000/svg'>
-							<path
-								fillRule='evenodd'
-								d='M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z'
-								clipRule='evenodd'
-							/>
-						</svg>
-					</Button>
-				</Tabs.Item>
-			</Tabs>
-		</Card>
+				</Link>
+				<Button disabled className=' bg-darkgreen'>
+					<span className='text-2xl'>
+						Lagerbestandsaktualisierung nach Bestelleingang
+					</span>
+				</Button>
+				<Button disabled className='  bg-darkgreen'>
+					<span className='text-2xl'>
+						Gültige Übergänge bei Bestellstatusänderung
+					</span>
+				</Button>
+				<Button disabled className='  bg-darkgreen'>
+					<span className='text-2xl'>
+						Speicherung und Analyse der Bestellstatusveränderungen
+					</span>
+				</Button>
+				<Button disabled className='  bg-darkgreen'>
+					<span className='text-2xl'>
+						Löschung Kundenkonto bei offenen Bestellungen
+					</span>
+				</Button>
+				<Button disabled className='  bg-darkgreen'>
+					<span className='text-2xl'>
+						Aktualisierung Lagerbestand nach Bestellstornierung
+					</span>
+				</Button>
+			</div>
+		</div>
 	)
 }
 

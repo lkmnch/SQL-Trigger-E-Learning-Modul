@@ -47,13 +47,6 @@ const TablesSidebar = () => {
 			aria-label='Sidebar for DB-Tables'>
 			<Sidebar.Items className='pt-14'>
 				<Sidebar.ItemGroup id='other'>
-					<Link to={"/"}>
-						<div className=' flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'>
-							<span className='px-3 flex-1 whitespace-nowrap'>
-								Willkommensseite
-							</span>
-						</div>
-					</Link>
 					<Link to={"/syntax"}>
 						<div className=' flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'>
 							<span className='px-3 flex-1 whitespace-nowrap'>

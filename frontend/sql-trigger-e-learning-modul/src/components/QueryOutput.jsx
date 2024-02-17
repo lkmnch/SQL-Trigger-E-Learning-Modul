@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react"
-import { Table, Pagination, Toast } from "flowbite-react"
-import { HiX } from "react-icons/hi"
+import { Table, Pagination, Alert } from "flowbite-react"
+import { HiInformationCircle } from "react-icons/hi"
 import InstructionModal from "./InstructionModal"
 import AppContext from "../context/AppProvider"
 
@@ -57,8 +57,8 @@ const QueryOutput = () => {
 	return (
 		<div className='h-2/3'>
 			{data.length ? (
-				<div className='relative shadow-md sm:rounded-lg flex flex-col gap-4'>
-					<div className='pb-4  bg-white dark:bg-gray-900 flex  gap-4 items-center'>
+				<div className='relative  sm:rounded-lg flex flex-col gap-4'>
+					<div className='pb-4   dark:bg-gray-900 flex  gap-4 items-center'>
 						<label htmlFor='table-search' className='sr-only'>
 							Search
 						</label>
@@ -84,27 +84,27 @@ const QueryOutput = () => {
 								id='table-search'
 								value={searchQuery}
 								placeholder='Kunde suchen'
-								className='block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+								className='block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-beige focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
 								onChange={handleSearchChange}
 							/>
 						</div>
 						{showToast && (
-							<Toast className='max-w-full h-10 mt-1'>
-								<div className='inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200'>
-									<HiX />
-								</div>
+							<Alert color='failure' icon={HiInformationCircle} className='  '>
 								<div className='ml-3 text-sm font-normal'>
 									{`${clickedCustomer} ist nicht dein angelegter Kunde`}{" "}
 								</div>
-							</Toast>
+							</Alert>
 						)}
 					</div>
 					<Table
 						hoverable
-						className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
-						<Table.Head className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+						className=' rounded-md w-full text-sm text-left rtl:text-right text-gray-500  dark:text-gray-400'>
+						<Table.Head className='text-xs text-gray-700 uppercase bg-beige dark:bg-gray-700 dark:text-gray-400'>
 							{tableHeaders.map((header, index) => (
-								<Table.HeadCell scope='col' className='px-6 py-3' key={index}>
+								<Table.HeadCell
+									scope='col'
+									className=' bg-darkgreen text-white px-6 py-3'
+									key={index}>
 									{header}
 								</Table.HeadCell>
 							))}
@@ -115,7 +115,7 @@ const QueryOutput = () => {
 									return (
 										<Table.Row
 											onClick={() => handleRowClick(row)}
-											className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'
+											className='hover:bg-gray-500 hover:bg-opacity-10 odd:bg-beige odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'
 											key={index}>
 											{Object.values(row).map((rowValue, index) => {
 												if (typeof rowValue === "object" && rowValue !== null) {

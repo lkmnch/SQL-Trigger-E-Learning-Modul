@@ -1,6 +1,6 @@
 import React from "react"
-import { Sidebar, Button, Card } from "flowbite-react"
-import { Outlet, Link } from "react-router-dom"
+import { Card } from "flowbite-react"
+import { Link } from "react-router-dom"
 function RentalMain() {
 	return (
 		<div className='container mx-auto flex justify-between'>

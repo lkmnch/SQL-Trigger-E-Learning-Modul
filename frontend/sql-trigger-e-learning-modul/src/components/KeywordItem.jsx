@@ -20,9 +20,9 @@ const KeywordItem = ({ keyword }) => {
 			ref={setNodeRef}
 			{...attributes}
 			{...listeners}
-			className='bg-green-300 h-10 rounded-xl flex  items-center '
+			className='bg-sage h-10 rounded-xl flex  items-center '
 			style={style}>
-			<span className='text-center m-5'> {keyword}</span>
+			<span className='text-beige text-center m-5'> {keyword}</span>
 		</div>
 	)
 }

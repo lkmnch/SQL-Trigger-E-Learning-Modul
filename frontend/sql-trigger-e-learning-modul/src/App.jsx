@@ -1,37 +1,52 @@
-import TablesSidebar from "./components/TablesSidebar"
-import { DarkThemeToggle, Tabs, Footer } from "flowbite-react"
-
-import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi"
+import { DarkThemeToggle, Footer, Button, Navbar } from "flowbite-react"
+import { Link } from "react-router-dom"
+import { HiHome, HiQuestionMarkCircle, HiDatabase } from "react-icons/hi"
 
 import { Outlet } from "react-router-dom"
 
 const App = () => {
 	return (
 		<div>
-			<header className='flex justify-between fixed z-30 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
+			<Navbar fluid className='bg-darkgreen fixed top-0 left-0 right-0 z-10'>
 				<div className='px-3 py-3 lg:px-5 lg:pl-3'>
-					<div
-						id='logo'
-						className='text-4xl font-black text-gray-900 dark:text-white'>
-						SQL-Trigger verstehen!
-					</div>
+					<Link to={"/"}>
+						<div id='logo' className='text-4xl font-black text-white'>
+							SQL-Trigger verstehen!
+						</div>
+					</Link>
 				</div>
+				<div className='flex gap-4'>
+					<Link to={"/"}>
+						<Button color='gray'>
+							<HiHome className='mr-3 h-4 w-4' />
+							Szenarioauswahl
+						</Button>
+					</Link>
+					<Link to={"/hilfe"}>
+						<Button color='gray'>
+							<HiQuestionMarkCircle className='mr-3 h-4 w-4' />
+							Hilfe
+						</Button>
+					</Link>
+					<Link to={"/editor"}>
+						<Button color='gray'>
+							<HiDatabase className='mr-3 h-4 w-4' />
+							SQL-Editor
+						</Button>
+					</Link>
+				</div>
+			</Navbar>
+
+			<main className='overflow-y-auto flex  pt-32 justify-center bg-sage min-h-screen '>
+				<div className='container mx-auto flex justify-center'>
+					<Outlet />
+				</div>
+			</main>
+
+			<Footer className='bg-beige rounded-none fixed bottom-0 left-0 right-0 z-10 '>
 				<DarkThemeToggle />
-			</header>
-			<div className='bg-slate-50 dark:bg-slate-600 min-h-screen pt-16'>
-				<div className='w-full flex flex-col sm:flex-row flex-grow overflow-hidden'>
-					<TablesSidebar />
-					<div
-						id='main-content'
-						className='relative w-full h-screen overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900'>
-						<main className='h-screen'>
-							<div className='h-screen flex px-4 pt-6 '>
-								<Outlet />
-							</div>
-						</main>
-					</div>
-				</div>
-			</div>
+				<span>SQL-Trigger verstehen! - 2024</span>
+			</Footer>
 		</div>
 	)
 }

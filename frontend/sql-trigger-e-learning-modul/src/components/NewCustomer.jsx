@@ -1,9 +1,11 @@
 import React, { useState, useContext } from "react"
 import { Link } from "react-router-dom"
-import { TextInput, Label, Button, Modal } from "flowbite-react"
+import { TextInput, Label, Button, Modal, Card } from "flowbite-react"
 import AppContext from "../context/AppProvider"
 import axios from "axios"
 import InstructionModal from "./InstructionModal"
+import newUser from "../images/newUser.jpg"
+import { UserRoundPlus } from "lucide-react"
 
 function NewCustomer() {
 	const [firstName, setFirstName] = useState("")
@@ -53,7 +55,7 @@ function NewCustomer() {
 	}
 
 	return (
-		<div className='flex gap-10 '>
+		<div className='flex h-2/3 gap-10 justify-center bg-darkgreen rounded-md	p-4 '>
 			<div className='w-52 h-52 bg-white rounded-lg mt-8'>
 				<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'>
 					<title />
@@ -70,7 +72,11 @@ function NewCustomer() {
 					<div className='flex gap-4'>
 						<div>
 							<div className='mb-2 block'>
-								<Label htmlFor='firstName' value='Vorname' />
+								<Label
+									className={"text-white"}
+									htmlFor='firstName'
+									value='Vorname'
+								/>
 							</div>
 							<TextInput
 								required
@@ -83,7 +89,11 @@ function NewCustomer() {
 						</div>
 						<div>
 							<div className='mb-2 block'>
-								<Label htmlFor='lastName' value='Nachname' />
+								<Label
+									className={"text-white"}
+									htmlFor='lastName'
+									value='Nachname'
+								/>
 							</div>
 							<TextInput
 								required
@@ -98,7 +108,11 @@ function NewCustomer() {
 					<div className='flex gap-4'>
 						<div>
 							<div className='mb-2 block'>
-								<Label htmlFor='email' value='E-Mail' />
+								<Label
+									className={"text-white"}
+									htmlFor='email'
+									value='E-Mail'
+								/>
 							</div>
 							<TextInput
 								id='email'
@@ -110,7 +124,11 @@ function NewCustomer() {
 						</div>
 						<div>
 							<div className='mb-2 block'>
-								<Label htmlFor='phone' value='Telefonnummer' />
+								<Label
+									className={"text-white"}
+									htmlFor='phone'
+									value='Telefonnummer'
+								/>
 							</div>
 							<TextInput
 								id='phone'
@@ -123,7 +141,7 @@ function NewCustomer() {
 					</div>
 					<div>
 						<div className='mb-2 block'>
-							<Label htmlFor='country' value='Land' />
+							<Label className={"text-white"} htmlFor='country' value='Land' />
 						</div>
 						<TextInput
 							required
@@ -136,7 +154,11 @@ function NewCustomer() {
 					</div>
 					<div>
 						<div className='mb-2 block'>
-							<Label htmlFor='postalCode' value='Postleitzahl' />
+							<Label
+								className={"text-white"}
+								htmlFor='postalCode'
+								value='Postleitzahl'
+							/>
 						</div>
 						<TextInput
 							required
@@ -149,7 +171,7 @@ function NewCustomer() {
 					</div>
 					<div>
 						<div className='mb-2 block'>
-							<Label htmlFor='city' value='Stadt' />
+							<Label className={"text-white"} htmlFor='city' value='Stadt' />
 						</div>
 						<TextInput
 							required
@@ -162,7 +184,11 @@ function NewCustomer() {
 					</div>
 					<div>
 						<div className='mb-2 block'>
-							<Label htmlFor='address' value='Adresse' />
+							<Label
+								className={"text-white"}
+								htmlFor='address'
+								value='Adresse'
+							/>
 						</div>
 						<TextInput
 							required
@@ -173,7 +199,9 @@ function NewCustomer() {
 							onChange={(e) => setAddress(e.target.value)}
 						/>
 					</div>
-					<Button type='submit'>Kunde anlegen</Button>
+					<Button className='bg-brown' type='submit'>
+						Kunde anlegen
+					</Button>
 					<InstructionModal
 						openModal={true}
 						title={instructions.S1S2.title}
@@ -188,30 +216,6 @@ function NewCustomer() {
 						text2={instructions.S1S2a.text2}
 						action={instructions.S1S2a.action}
 					/>
-
-					{/* <Modal show={openModal} onClose={() => setOpenModal(false)}>
-						<Modal.Header>
-							<span>{"Tutorial - Schritt [1/4]"}</span>
-						</Modal.Header>
-						<Modal.Body>
-							<div className='space-y-6'>
-								<p className='text-3xl text-center  leading-relaxed text-gray-500 dark:text-gray-400'>
-									{createCustomerResponse.data}
-								</p>
-							</div>
-						</Modal.Body>
-						<Modal.Footer className='flex justify-center'>
-							<Button onClick={() => setOpenModal(false)}>
-								Weiteren Kunden anlegen
-							</Button>
-
-							<Link to={"/rental"}>
-								<Button color='gray' onClick={() => setOpenModal(false)}>
-									Zurück zum Dashboard
-								</Button>
-							</Link>
-						</Modal.Footer>
-					</Modal> */}
 				</div>
 			</form>
 		</div>

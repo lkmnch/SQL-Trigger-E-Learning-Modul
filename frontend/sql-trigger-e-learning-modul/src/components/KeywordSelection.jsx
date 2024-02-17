@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useContext } from "react"
 import { Button } from "flowbite-react"
 import TablesContext from "../context/TablesProvider"
 
@@ -14,7 +14,7 @@ function KeywordSelection() {
 		"TRIGGER",
 		"customer_create_date",
 		"BEFORE",
-		"AFTRER",
+		"AFTER",
 		"ON",
 		"customer",
 		"FOR EACH ROW",
